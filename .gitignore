@@ -1,0 +1,7 @@
+.vscode/
+build/
+*.o
+*.out
+tests/input/*
+tests/output/*
+!tests/output/time/

@@ -20,8 +20,7 @@ void do_q1(int _n, bool print_output)
     int max_arg = 10;
     if (_n < -1 || _n >= max_arg)
     {
-        Log.w("bad arguement", _n);
-        return;
+        Log.w("bad argument", _n);
     }
     else if (_n == -1)
     {
@@ -70,8 +69,7 @@ void do_q2(int _n, bool print_output)
     int max_arg = 13;
     if (_n < -1 || _n > max_arg)
     {
-        Log.w("bad arguement", _n);
-        return;
+        Log.w("bad argument", _n);
     }
     else if (_n == -1)
     {
@@ -116,8 +114,7 @@ void do_q3(int _n, bool print_output)
     int max_arg = 11;
     if (_n < -1 || _n > max_arg)
     {
-        Log.w("bad arguement", _n);
-        return;
+        Log.w("bad argument", _n);
     }
     else if (_n == -1)
     {

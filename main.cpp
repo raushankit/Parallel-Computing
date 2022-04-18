@@ -14,7 +14,7 @@ int main(int argc, char **argv)
     {
         if (argc == 1)
         {
-            throw std::invalid_argument("invalid arguement:: no input arguements found");
+            throw std::invalid_argument("invalid arguement:: no input arguments found");
         }
         int _qno = atoi(argv[1]);
         if (_qno < 1 || _qno > 3)

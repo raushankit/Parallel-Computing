@@ -1,48 +1,46 @@
 #include "test.h"
-using namespace std;
 
 _test::_test() {}
 
 void _test::create_tests()
 {
     Log.i("checking test directories....................");
-    bool _rooti = filesystem::create_directories("tests/input");
-    bool _rooto = filesystem::create_directory("tests/output");
+    bool _rooti = std::filesystem::create_directories("tests/input");
+    bool _rooto = std::filesystem::create_directory("tests/output");
     Log.i((_rooti || _rooto) ? "[test] directories created" : "[test] directories exist");
-    bool _rooti_q1 = filesystem::create_directory("tests/input/multiply");
-    filesystem::create_directories("tests/input/multiply/serial");
-    filesystem::create_directory("tests/input/multiply/openmp");
-    filesystem::create_directory("tests/input/multiply/pthread");
+    bool _rooti_q1 = std::filesystem::create_directory("tests/input/multiply");
+    std::filesystem::create_directories("tests/input/multiply/serial");
+    std::filesystem::create_directory("tests/input/multiply/openmp");
+    std::filesystem::create_directory("tests/input/multiply/pthread");
     if (_rooti_q1)
     {
         generate_multiplication_tests();
     }
 
-    bool _rooti_q2 = filesystem::create_directory("tests/input/gauss_elim");
-    filesystem::create_directories("tests/output/gauss_elim/serial");
-    filesystem::create_directory("tests/output/gauss_elim/openmp");
-    filesystem::create_directory("tests/output/gauss_elim/pthread");
+    bool _rooti_q2 = std::filesystem::create_directory("tests/input/gauss_elim");
+    std::filesystem::create_directories("tests/output/gauss_elim/serial");
+    std::filesystem::create_directory("tests/output/gauss_elim/openmp");
+    std::filesystem::create_directory("tests/output/gauss_elim/pthread");
     if (_rooti_q2)
     {
         generate_gauss_elim_tests();
     }
-    bool _rooti_q3 = filesystem::create_directory("tests/input/mat_inv");
-    filesystem::create_directories("tests/output/mat_inv/serial");
-    filesystem::create_directory("tests/output/mat_inv/openmp");
-    filesystem::create_directory("tests/output/mat_inv/pthread");
+    bool _rooti_q3 = std::filesystem::create_directory("tests/input/mat_inv");
+    std::filesystem::create_directories("tests/output/mat_inv/serial");
+    std::filesystem::create_directory("tests/output/mat_inv/openmp");
+    std::filesystem::create_directory("tests/output/mat_inv/pthread");
     if (_rooti_q3)
     {
         generate_mat_inv_tests();
     }
-    filesystem::create_directory("tests/output/time");
+    std::filesystem::create_directory("tests/output/time");
 }
 
 void _test::create_test_directories()
 {
-    bool _p = filesystem::create_directories("testing/a/b/d");
-    cout << "_p = " << _p << endl;
-    _p = filesystem::create_directory("testing/a/b");
-    cout << "_p = " << _p << endl;
+    bool _p = std::filesystem::create_directories("testing/a/b/d");
+    _p = std::filesystem::create_directory("testing/a/b");
+    Log.i(_p ? "parent directory created!!" : "parent directory exists!!");
 }
 
 void _test::create_directories()
@@ -55,16 +53,16 @@ void _test::generate_multiplication_tests()
     Log.i("generating test matrices for multiplication");
     auto _generate = [](int m1, int n1, int m2, int n2)
     {
-        string fname = ".tests/input/multiply/";
-        fname += "inp" + to_string(m1) + "x" + to_string(n1) + "_" + to_string(m2) + "x" + to_string(n2) + ".txt";
-        ofstream fout(&fname[0]);
+        std::string fname = ".tests/input/multiply/";
+        fname += "inp" + std::to_string(m1) + "x" + std::to_string(n1) + "_" + std::to_string(m2) + "x" + std::to_string(n2) + ".txt";
+        std::ofstream fout(&fname[0]);
         smatrix<int> s1(m1, n1), s2(m2, n2);
         s1.fill_random(), s2.fill_random();
         fout << m1 << ' ' << n1 << '\n'
-             << s1 << endl;
+             << s1 << std::endl;
         fout << m2 << ' ' << n2 << '\n'
-             << s2 << endl;
-        Log.i("created matrices {" + to_string(m1) + "x" + to_string(n1) + "} and {" + to_string(m2) + "x" + to_string(n2) + "}");
+             << s2 << std::endl;
+        Log.i("created matrices {" + std::to_string(m1) + "x" + std::to_string(n1) + "} and {" + std::to_string(m2) + "x" + std::to_string(n2) + "}");
     };
 
     _generate(3, 5, 5, 9);
@@ -87,11 +85,11 @@ void _test::generate_gauss_elim_tests()
     {
         smatrix<double> _ta(n + 1, n);
         _ta.fill_random();
-        string fname = "tests/input/gauss_elim/" + to_string(n) + ".txt";
-        ofstream fout(&fname[0]);
+        std::string fname = "tests/input/gauss_elim/" + std::to_string(n) + ".txt";
+        std::ofstream fout(&fname[0]);
         fout << n << '\n'
              << _ta;
-        Log.i("created matrix {" + to_string(n) + "x" + to_string(n) + "}");
+        Log.i("created matrix {" + std::to_string(n) + "x" + std::to_string(n) + "}");
     };
     _generate(5);
     _generate(10);
@@ -116,11 +114,11 @@ void _test::generate_mat_inv_tests()
     {
         smatrix<double> _ta(n + 1, n);
         _ta.fill_random();
-        string fname = "tests/input/mat_inv/" + to_string(n) + ".txt";
-        ofstream fout(&fname[0]);
+        std::string fname = "tests/input/mat_inv/" + std::to_string(n) + ".txt";
+        std::ofstream fout(&fname[0]);
         fout << n << '\n'
              << _ta;
-        Log.i("created matrix {" + to_string(n) + "x" + to_string(n) + "}");
+        Log.i("created matrix {" + std::to_string(n) + "x" + std::to_string(n) + "}");
     };
     _generate(5);
     _generate(10);

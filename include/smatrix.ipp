@@ -79,7 +79,7 @@ template <typename T>
 const sarray<T> &smatrix<T>::operator[](const size_t _i) const { return arr[_i]; }
 
 template <typename T>
-smatrix<T> &smatrix<T>::transpose() const
+smatrix<T> smatrix<T>::transpose() const
 {
     smatrix<T> _t(n, m);
     fs(i, 0, m) fs(j, 0, n) _t[j][i] = arr[i][j];
@@ -90,14 +90,15 @@ template <typename T>
 T smatrix<T>::diff(const smatrix<T> &p) const
 {
     if (m != p.m || n != p.n)
-        return 0;
-    T _diff = 0;
+        return T(0);
+    T _diff = T(0);
     fs(i, 0, m) fs(j, 0, n) _diff += std::abs(arr[i][j] - p.arr[i][j]);
     if constexpr (std::is_floating_point_v<T>)
     {
         if (std::abs(_diff) <= TOLERANCE)
-            return T(0);
+            _diff = T(0);
     }
+    Log.i(_diff == T(0) ? "DIFF==0::Correct Answer" : "DIFF!=0::Incorrect Answer");
     return _diff;
 }
 

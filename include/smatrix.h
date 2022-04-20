@@ -39,7 +39,7 @@ public:
     smatrix &operator=(smatrix &&);
     sarray<T> &operator[](size_t);
     const sarray<T> &operator[](const size_t) const;
-    smatrix &transpose() const;
+    smatrix transpose() const;
     T diff(const smatrix &) const;
 
     template <typename S>

@@ -1,11 +1,16 @@
 CPP = g++
 STD = -std=c++17
-OPTIMIZER = -O2
+OPTIMIZER = -O3
 WFLAGS = -Wall -W
 OPENMP = -fopenmp
 PTHREAD = -pthread
 FSWITCH = -flto -ffunction-sections -fdata-sections
+###################################################
+## 1. Don't use LEVEL 2 or 1 huge amount of logs will
+## be generated.
+## 2. After changing this always do "make clean"
 DBGFLAG = D_LEVEL3
+###################################################
 RM  = rm -fr
 EXEC = a.out
 

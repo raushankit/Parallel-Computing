@@ -22,7 +22,7 @@ void *pth_worker(void *);
 
 void read_multiplication_input(int);
 
-void free_memory();
+void free_memory_q1();
 
 void print_ans(string, string);
 

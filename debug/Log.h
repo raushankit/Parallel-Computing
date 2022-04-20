@@ -8,24 +8,10 @@
  * @author Ankit Raushan (@raushankit)
  * @brief logging header
  * @date 2022-03-13
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
-
-#ifdef D_LEVEL1
-const int _level = 1;
-#elif D_LEVEL2
-const int _level = 2;
-#elif D_LEVEL3
-const int _level = 3;
-#elif D_LEVEL4
-const int _level = 4;
-#elif D_LEVEL5
-const int _level = 5;
-#else
-const int _level = 6;
-#endif
 
 class _Log
 {
@@ -48,12 +34,14 @@ public:
     void e(Args &&...args);
 
 private:
+    inline static const std::string _COLOR_ARRAY[] = {"97", "36", "32", "33", "31", "39"};
+
     std::string className = "";
     bool flag = false;
     std::ofstream fout;
 
     template <typename... Args>
-    void print(std::string, Args &&...args);
+    void print(int type_n, std::string, Args &&...args);
 };
 #include "Log.tpp"
 #endif

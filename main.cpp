@@ -57,18 +57,5 @@ int main(int argc, char **argv)
     {
         cout << "invalid arguement:: " << i_a.what() << endl;
     }
-    /*
-    read_multiplication_input(9);
-    openmp_multiplication();
-    pthread_multiplication();
-    free_memory();*/
-    // omp_gauss_elim(12);
-    // pthread_gauss_elim(2);
-    // pthread_gauss_elim(3);
-    // serial_gauss_elim(2);
-    // omp_mat_inverse_solver(6);
-
-    // pth_mat_inverse_solver(4);
-    // serial_mat_inverse_solver(6);
     return 0;
 }

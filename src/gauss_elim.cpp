@@ -3,7 +3,7 @@
 namespace Solution2
 {
     const std::string file_names[13] = {"5", "10", "20", "50", "100", "200", "300", "500", "800", "1000", "1500", "1800", "2000"};
-    timer _timer = timer(timer::Precision::MILLISECOND);
+    timer _timer = timer(timer::Precision::MICROSECOND);
     const int NUM_THREADS = 10;
     int64_t _stime;
     Matd a;
@@ -97,7 +97,7 @@ pair<int64_t, int64_t> omp_gauss_elim(int _n, bool _pf)
         print_gauss_elim_output("openmp", _n);
     }
     serial_gauss_elim(_n, _pf);
-    cout << "diff = " << (_comp.diff(b)) << endl;
+    _comp.diff(b);
     return {_tomp, _stime};
 }
 
@@ -227,7 +227,7 @@ pair<int64_t, int64_t> pthread_gauss_elim(int _n, bool _pf)
         print_gauss_elim_output("pthread", _n);
     }
     serial_gauss_elim(_n, _pf);
-    cout << "diff = " << (_comp.diff(b)) << endl;
+    _comp.diff(b);
     return {_tpth, _stime};
 }
 
@@ -251,7 +251,6 @@ void serial_gauss_elim(int _n, bool _pf)
             b[id[j]] -= b[id[i]] * fac;
         }
     }
-    // cout << a << endl;
     back_substitution();
     _stime = _timer.print_and_update("serial");
     if (_pf)

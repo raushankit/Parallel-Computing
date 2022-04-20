@@ -3,7 +3,7 @@ namespace Solution3
 {
     const std::string file_names[] = {"5", "10", "20", "30", "40", "50", "60", "80", "100", "120", "150"};
     const double TOL = 1e-10;
-    timer _timer = timer(timer::Precision::MILLISECOND);
+    timer _timer = timer(timer::Precision::MICROSECOND);
     const int NUM_THREADS = 10;
     const int SIZE_THRESHOLD = 49;
     int64_t _stime;
@@ -217,7 +217,7 @@ pair<int64_t, int64_t> pth_mat_inverse_solver(int _n, bool _pf)
         print_mat_inv_output("pthread", _n, _ans);
     }
     auto _x = serial_mat_inverse_solver(_n, _pf);
-    cout << "diff = " << (_ans.diff(_x)) << endl;
+    _ans.diff(_x);
     return {_tpth, _stime};
 }
 
@@ -243,7 +243,7 @@ pair<int64_t, int64_t> omp_mat_inverse_solver(int _n, bool _pf)
         print_mat_inv_output("openmp", _n, _comp);
     }
     auto _x = serial_mat_inverse_solver(_n, _pf);
-    cout << "diff = " << (_comp.diff(_x)) << endl;
+    _comp.diff(_x);
     return {_tomp, _stime};
 }
 

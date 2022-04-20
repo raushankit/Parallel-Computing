@@ -2,7 +2,7 @@
 namespace Solution1
 {
     const std::string file_names[10] = {"3x5_5x9", "8x10_10x12", "20x20_20x21", "50x55_55x64", "100x100_100x100", "200x200_200x200", "300x350_350x300", "500x500_500x500", "800x800_800x800", "1000x1000_1000x1000"};
-    timer _timer = timer(timer::Precision::MILLISECOND);
+    timer _timer = timer(timer::Precision::MICROSECOND);
     const int NUM_THREADS = 10;
     Mati a, b, c;
     int64_t _stime;
@@ -65,7 +65,7 @@ pair<int64_t, int64_t> openmp_multiplication(bool _pf)
         print_ans("openmp", file_names[__n]);
     }
     auto _comp = serial_multiplication(_pf);
-    cout << "diff = " << c.diff(_comp) << endl;
+    c.diff(_comp);
     return {_tomp, _stime};
 }
 
@@ -113,7 +113,7 @@ pair<int64_t, int64_t> pthread_multiplication(bool _pf)
         print_ans("pthread", file_names[__n]);
     }
     auto _comp = serial_multiplication(_pf);
-    cout << "diff = " << c.diff(_comp) << endl;
+    c.diff(_comp);
     return {_tpth, _stime};
 }
 
@@ -140,4 +140,4 @@ smatrix<int> serial_multiplication(bool _pf)
     return _c;
 }
 
-void free_memory() { a = b = c = smatrix<int>(); }
+void free_memory_q1() { a = b = c = smatrix<int>(); }

@@ -6,9 +6,9 @@
  * @author Ankit Raushan (@raushankit)
  * @brief mimics vector
  * @date 2021-04-08
- * 
+ *
  * @copyright Copyright (c) 2021
- * 
+ *
  */
 
 #include <iostream>
@@ -16,7 +16,6 @@
 #include "../debug/Log.h"
 #define f(i, k, n) for (int i = k; i < n; ++i)
 #define fs(i, k, n) for (size_t i = k; i < n; ++i)
-using namespace std;
 
 template <typename T>
 class sarray

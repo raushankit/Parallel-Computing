@@ -69,13 +69,14 @@ sarray<T>::~sarray()
 template <typename T>
 T sarray<T>::diff(const sarray<T> &p) const
 {
-    T _diff = 0;
+    T _diff = T(0);
     fs(i, 0, n) _diff += std::abs(arr[i] - p.arr[i]);
     if constexpr (std::is_floating_point_v<T>)
     {
         if (std::abs(_diff) <= TOLERANCE)
-            return T(0);
+            _diff = T(0);
     }
+    Log.i(_diff == T(0) ? "DIFF==0::Correct Answer" : "DIFF!=0::Incorrect Answer");
     return _diff;
 }
 

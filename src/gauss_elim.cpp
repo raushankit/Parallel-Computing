@@ -11,12 +11,12 @@ namespace Solution2
     sarray<int> id;
     const double TOL = 1e-10;
     pthread_mutex_t pivot_mutex;
-    pthread_barrier_t barrier;
     pthread_cond_t cd;
     int WORKING_THREADS;
     int count_threads = 0;
     int interval_pointer = 0;
     int thread_end[NUM_THREADS] = {0};
+    pair<int, int> thread_range[NUM_THREADS];
 }
 using namespace Solution2;
 
@@ -147,41 +147,37 @@ void *parallel_worker_gauss(void *_args)
 
 void *pth_gauss_worker(void *_args)
 {
-    auto data = (ge_args *)_args;
-    int start = data->start;
-    int end = data->end;
-    int n = data->n;
+    auto data = (pair<int, int> *)_args;
+    int _tid = data->first;
+    int n = data->second;
 
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n - 1; ++i)
     {
-        if ((i >= start && i < end) && abs(a[id[i]][i]) <= TOL)
+        pthread_mutex_lock(&pivot_mutex);
+        count_threads++;
+        if (count_threads == WORKING_THREADS)
         {
-            f(j, i + 1, n)
-            {
-                if (abs(a[id[j]][i]) > TOL)
-                {
-                    id[j] = i;
-                    id[i] = j;
-                    break;
-                }
-                if (j == n - 1)
-                {
-                    cout << "bad set of equations" << endl;
-                }
-            }
+            condition_pivot(i, n);
+            distribute_work(i + 1, n);
+            count_threads = 0;
+            pthread_cond_broadcast(&cd);
         }
-        pthread_barrier_wait(&barrier);
-        for (int j = max(i + 1, start); j < end; j++)
-            for (int j = i + 1; j < n; ++j)
+        else
+        {
+            pthread_cond_wait(&cd, &pivot_mutex);
+        }
+        pthread_mutex_unlock(&pivot_mutex);
+
+        for (int j = thread_range[_tid].first; j < thread_range[_tid].second; ++j)
+        {
+            double fac = a[id[j]][i] / a[id[i]][i];
+            for (int k = i + 1; k < n; ++k)
             {
-                double fac = a[id[j]][i] / a[id[i]][i];
-                for (int k = i + 1; k < n; ++k)
-                {
-                    a[id[j]][k] -= a[id[i]][k] * fac;
-                }
-                a[id[j]][i] = 0;
-                b[id[j]] -= b[id[i]] * fac;
+                a[id[j]][k] -= a[id[i]][k] * fac;
             }
+            a[id[j]][i] = 0;
+            b[id[j]] -= b[id[i]] * fac;
+        }
     }
     free(_args);
     return NULL;
@@ -199,7 +195,6 @@ pair<int64_t, int64_t> pthread_gauss_elim(int _n, bool _pf)
     count_threads = 0;
     interval_pointer = 0;
     pthread_mutex_init(&pivot_mutex, NULL);
-    pthread_barrier_init(&barrier, NULL, _nth);
     pthread_cond_init(&cd, NULL);
     _timer.pin();
     for (int i = 0; i < _nth; ++i)
@@ -210,6 +205,8 @@ pair<int64_t, int64_t> pthread_gauss_elim(int _n, bool _pf)
         _args->thread_id = i;
         thread_end[i] = _args->end;
         _args->n = a.n;
+        /*pair<int, int> *_args = new pair<int, int>();
+        _args->first = i, _args->second = n;*/
         pthread_create(&threads[i], NULL, &parallel_worker_gauss, _args);
     }
     for (int i = 0; i < _nth; ++i)
@@ -217,7 +214,6 @@ pair<int64_t, int64_t> pthread_gauss_elim(int _n, bool _pf)
         pthread_join(threads[i], NULL);
     }
     pthread_mutex_destroy(&pivot_mutex);
-    pthread_barrier_destroy(&barrier);
     pthread_cond_destroy(&cd);
     back_substitution();
     auto _tpth = _timer.print_and_update("pthread");
@@ -256,6 +252,17 @@ void serial_gauss_elim(int _n, bool _pf)
     if (_pf)
     {
         print_gauss_elim_output("serial", _n);
+    }
+}
+
+void distribute_work(int _str, int _n)
+{
+    int div = (_n - _str) / NUM_THREADS;
+    int rem = (_n - _str) % NUM_THREADS;
+    for (int i = 0; i < NUM_THREADS; ++i)
+    {
+        thread_range[i].first = _str;
+        thread_range[i].second = _str += div + (rem-- > 0);
     }
 }
 

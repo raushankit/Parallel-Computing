@@ -22,6 +22,8 @@ void serial_gauss_elim(int, bool = false);
 
 void back_substitution();
 
+void distribute_work(int, int);
+
 void *pth_gauss_worker(void *);
 
 void condition_pivot(int, int);

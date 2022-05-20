@@ -4,6 +4,7 @@
 #include <fstream>
 #include <omp.h>
 #include <pthread.h>
+#include "../global.h"
 #include "../include/smatrix.h"
 #include "../debug/Log.h"
 #include "timer.h"

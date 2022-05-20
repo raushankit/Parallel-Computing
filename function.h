@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include "global.h"
 #include "./src/timer.h"
 #include "./debug/Log.h"
 #include "./src/mat_mult.h"

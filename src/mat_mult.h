@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include "../global.h"
 #include "timer.h"
 #include "mult_args.h"
 #include <omp.h>

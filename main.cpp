@@ -1,14 +1,21 @@
+#include "global.h"
 #include "function.h"
 #include "test.h"
 #include "./src/mat_mult.h"
 #include "./src/gauss_elim.h"
 #include "./src/mat_inv.h"
+
 using namespace std;
+
+global* global::INSTANCE = nullptr;
 
 int main(int argc, char **argv)
 {
     _test test;
     test.create_tests();
+    global *_global = global::getInstance();
+    _global->fetch_data();
+    
     cout << "***********************************************************" << endl;
     try
     {

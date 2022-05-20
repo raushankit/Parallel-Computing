@@ -1,9 +1,9 @@
 #include "mat_inv.h"
 namespace Solution3
 {
-    const std::string file_names[] = {"5", "10", "20", "30", "40", "50", "60", "80", "100", "120", "150"};
+    global *_gb = global::getInstance();
     const double TOL = 1e-10;
-    timer _timer = timer(timer::Precision::MICROSECOND);
+    timer _timer = timer(_gb->_time_unit);
     const int NUM_THREADS = 10;
     const int SIZE_THRESHOLD = 49;
     int64_t _stime;
@@ -17,7 +17,7 @@ using namespace Solution3;
 void read_input(int _n)
 {
     string name = "./tests/input/mat_inv/";
-    name = name + file_names[_n] + ".txt";
+    name = name + _gb->files_q3[_n];
     cout << name << endl;
     ifstream fin(&name[0]);
     int n;
@@ -30,7 +30,7 @@ void read_input(int _n)
 
 void print_mat_inv_output(string type, int _n, sarray<long double> p)
 {
-    string name = "./tests/output/mat_inv/" + type + "/" + file_names[_n] + ".txt";
+    string name = "./tests/output/mat_inv/" + type + "/" + _gb->files_q3[_n];
     ofstream fout;
     fout.open(name);
     fout << p << endl;

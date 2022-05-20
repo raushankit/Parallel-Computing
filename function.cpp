@@ -4,9 +4,7 @@ namespace Function
 {
     _Log Log = _Log("function.h");
     timer _timer = timer(timer::Precision::MILLISECOND);
-    const int fq1[] = {5, 10, 20, 50, 100, 200, 300, 500, 800, 1000};
-    const int fq2[] = {5, 10, 20, 50, 100, 200, 300, 500, 800, 1000, 1500, 1800, 2000};
-    const int fq3[] = {5, 10, 20, 30, 40, 50, 60, 80, 100, 120, 150};
+    global *_gb = global::getInstance();
 }
 using namespace Function;
 
@@ -17,7 +15,7 @@ void test()
 void do_q1(int _n, bool print_output)
 {
     Log.i("STARTING QUESTION 1");
-    int max_arg = 10;
+    int max_arg = _gb->num_q1.size();
     if (_n < -1 || _n == 0 || _n > max_arg)
     {
         Log.w("bad argument", _n);
@@ -30,7 +28,7 @@ void do_q1(int _n, bool print_output)
             Log.i("Running test case::" + to_string(i + 1) + "............");
             r_info info;
             read_multiplication_input(i);
-            info.n = fq1[i];
+            info.n = _gb->num_q1[i];
             auto o = openmp_multiplication(print_output);
             info.omp_time = o.first;
             auto p = pthread_multiplication(print_output);
@@ -51,7 +49,7 @@ void do_q1(int _n, bool print_output)
         Log.i("Running test case::" + to_string(_n) + "............");
         r_info info;
         read_multiplication_input(_n - 1);
-        info.n = fq1[_n - 1];
+        info.n = _gb->num_q1[_n - 1];
         auto o = openmp_multiplication(print_output);
         info.omp_time = o.first;
         auto p = pthread_multiplication(print_output);
@@ -67,7 +65,7 @@ void do_q1(int _n, bool print_output)
 void do_q2(int _n, bool print_output)
 {
     Log.i("STARTING QUESTION 2");
-    int max_arg = 13;
+    int max_arg = _gb->num_q2.size();
     if (_n < -1 || _n == 0 || _n > max_arg)
     {
         Log.w("bad argument", _n);
@@ -79,7 +77,7 @@ void do_q2(int _n, bool print_output)
         {
             Log.i("Running test case::" + to_string(i + 1) + "............");
             r_info info;
-            info.n = fq2[i];
+            info.n = _gb->num_q2[i];
             auto o = omp_gauss_elim(i, print_output);
             info.omp_time = o.first;
             auto p = pthread_gauss_elim(i, print_output);
@@ -99,7 +97,7 @@ void do_q2(int _n, bool print_output)
     {
         Log.i("Running test case::" + to_string(_n) + "............");
         r_info info;
-        info.n = fq2[_n - 1];
+        info.n = _gb->num_q2[_n - 1];
         auto o = omp_gauss_elim(_n - 1, print_output);
         info.omp_time = o.first;
         auto p = pthread_gauss_elim(_n - 1, print_output);
@@ -114,7 +112,7 @@ void do_q2(int _n, bool print_output)
 void do_q3(int _n, bool print_output)
 {
     Log.i("STARTING QUESTION 3");
-    int max_arg = 11;
+    int max_arg = _gb->num_q3.size();
     if (_n < -1 || _n == 0 || _n > max_arg)
     {
         Log.w("bad argument", _n);
@@ -126,7 +124,7 @@ void do_q3(int _n, bool print_output)
         {
             Log.i("Running test case::" + to_string(i + 1) + "............");
             r_info info;
-            info.n = fq3[i];
+            info.n = _gb->num_q3[i];
             auto o = omp_mat_inverse_solver(i, print_output);
             info.omp_time = o.first;
             auto p = pth_mat_inverse_solver(i, print_output);
@@ -146,7 +144,7 @@ void do_q3(int _n, bool print_output)
     {
         Log.i("Running test case::" + to_string(_n) + "............");
         r_info info;
-        info.n = fq3[_n - 1];
+        info.n = _gb->num_q3[_n - 1];
         auto o = omp_mat_inverse_solver(_n - 1, print_output);
         info.omp_time = o.first;
         auto p = pth_mat_inverse_solver(_n - 1, print_output);

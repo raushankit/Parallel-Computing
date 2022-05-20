@@ -2,8 +2,8 @@
 
 namespace Solution2
 {
-    const std::string file_names[13] = {"5", "10", "20", "50", "100", "200", "300", "500", "800", "1000", "1500", "1800", "2000"};
-    timer _timer = timer(timer::Precision::MICROSECOND);
+    global *_gb = global::getInstance();
+    timer _timer = timer(_gb->_time_unit);
     const int NUM_THREADS = 10;
     int64_t _stime;
     Matd a;
@@ -23,7 +23,7 @@ using namespace Solution2;
 void read_gauss_input(int _n)
 {
     string name = "./tests/input/gauss_elim/";
-    name = name + file_names[_n] + ".txt";
+    name = name + _gb->files_q2[_n];
     cout << name << endl;
     ifstream fin(&name[0]);
     int n;
@@ -37,7 +37,7 @@ void read_gauss_input(int _n)
 
 void print_gauss_elim_output(string type, int _n)
 {
-    string name = "./tests/output/gauss_elim/" + type + "/" + file_names[_n] + ".txt";
+    string name = "./tests/output/gauss_elim/" + type + "/" + _gb->files_q2[_n];
     ofstream fout;
     fout.open(name);
     fout << b << endl;

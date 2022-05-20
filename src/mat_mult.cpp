@@ -1,8 +1,9 @@
 #include "mat_mult.h"
 namespace Solution1
 {
-    const std::string file_names[10] = {"3x5_5x9", "8x10_10x12", "20x20_20x21", "50x55_55x64", "100x100_100x100", "200x200_200x200", "300x350_350x300", "500x500_500x500", "800x800_800x800", "1000x1000_1000x1000"};
-    timer _timer = timer(timer::Precision::MICROSECOND);
+    global *_gb = global::getInstance();
+    // const std::string file_names[10] = {"3x5_5x9", "8x10_10x12", "20x20_20x21", "50x55_55x64", "100x100_100x100", "200x200_200x200", "300x350_350x300", "500x500_500x500", "800x800_800x800", "1000x1000_1000x1000"};
+    timer _timer = timer(_gb->_time_unit);
     const int NUM_THREADS = 10;
     Mati a, b, c;
     int64_t _stime;
@@ -12,8 +13,8 @@ using namespace Solution1;
 
 void read_multiplication_input(int _n)
 {
-    string name = "./tests/input/multiply/inp";
-    name = name + file_names[_n] + ".txt";
+    string name = "./tests/input/multiply/";
+    name = name + _gb->files_q1[_n];
     __n = _n;
     cout << name << endl;
     ifstream fin(&name[0]);
@@ -62,7 +63,7 @@ pair<int64_t, int64_t> openmp_multiplication(bool _pf)
     auto _tomp = _timer.print_and_update("omp");
     if (_pf)
     {
-        print_ans("openmp", file_names[__n]);
+        print_ans("openmp", _gb->files_q1[__n]);
     }
     auto _comp = serial_multiplication(_pf);
     c.diff(_comp);
@@ -110,7 +111,7 @@ pair<int64_t, int64_t> pthread_multiplication(bool _pf)
     auto _tpth = _timer.print_and_update("pthread");
     if (_pf)
     {
-        print_ans("pthread", file_names[__n]);
+        print_ans("pthread", _gb->files_q1[__n]);
     }
     auto _comp = serial_multiplication(_pf);
     c.diff(_comp);
@@ -131,7 +132,7 @@ smatrix<int> serial_multiplication(bool _pf)
     _stime = _timer.print_and_update("serial");
     if (_pf)
     {
-        string name = "./tests/output/multiply/serial/" + file_names[__n] + ".txt";
+        string name = "./tests/output/multiply/serial/" + _gb->files_q1[__n];
         ofstream fout;
         fout.open(name);
         fout << _c << endl;

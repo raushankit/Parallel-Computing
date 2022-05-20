@@ -67,6 +67,9 @@ sarray<T>::~sarray()
 }
 
 template <typename T>
+size_t sarray<T>::size() { return n; }
+
+template <typename T>
 T sarray<T>::diff(const sarray<T> &p) const
 {
     T _diff = T(0);

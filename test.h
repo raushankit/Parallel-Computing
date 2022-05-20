@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
+#include <vector>
 #include "./include/smatrix.h"
 #include "./src/timer.h"
 #include "./debug/Log.h"
@@ -23,6 +24,7 @@ private:
     void generate_multiplication_tests();
     void generate_gauss_elim_tests();
     void generate_mat_inv_tests();
+    void create_index(std::string path, std::vector<std::pair<int, std::string>>);
 };
 
 #endif

@@ -34,6 +34,7 @@ public:
     virtual ~sarray();
     T diff(const sarray &) const;
     void set(const T);
+    size_t size();
 
     T &operator[](size_t);
     const T &operator[](const size_t) const;

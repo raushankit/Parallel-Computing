@@ -27,7 +27,7 @@ SOURCES = timer.o run_info.o \
 		  gauss_elim_args.o gauss_elim.o \
 		  mat_inv_ret.o mat_inv_args.o mat_inv.o \
 
-MAIN = test.o function.o main.o \
+MAIN = test.o global.o function.o main.o \
 
 OBJECTS = \
 	 $(addprefix $(OBJDIR)/$(SRCDIR)/, $(SOURCES)) \

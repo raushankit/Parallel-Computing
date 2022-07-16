@@ -5,3 +5,4 @@ build/
 tests/input/*
 tests/output/*
 !tests/output/time/
+global.h

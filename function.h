@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <iomanip>
 #include "global.h"
 #include "./src/timer.h"
 #include "./debug/Log.h"
@@ -21,5 +22,7 @@ void do_q1(int = -1, bool = false);
 void do_q2(int = -1, bool = false);
 
 void do_q3(int = -1, bool = false);
+
+void print_info(std::ostream &out, std::string heading, sarray<r_info> infos);
 
 #endif

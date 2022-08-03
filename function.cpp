@@ -3,7 +3,6 @@
 namespace Function
 {
     _Log Log = _Log("function.h");
-    timer _timer = timer(timer::Precision::MILLISECOND);
     global *_gb = global::getInstance();
 }
 using namespace Function;
@@ -39,7 +38,11 @@ void do_q1(int _n, bool print_output)
         }
         ofstream fout;
         fout.open("./tests/output/time/q1.txt");
-        fout << "[n => serial,openmp,pthread]\n";
+        fout << "| " << std::setw(8) << "size"
+             << " || " << std::setw(15) << "serial time"
+             << " | " << std::setw(15) << "openMP time "
+             << " | " << std::setw(15) << "pthread time"
+             << " |\n";
         fout << info_list << endl;
         fout.close();
         free_memory_q1();
@@ -154,4 +157,31 @@ void do_q3(int _n, bool print_output)
     }
     Log.i("ENDING QUESTION 3");
     cout << "**************************************************************\n";
+}
+
+void print_info(std::ostream &out, std::string heading, sarray<r_info> infos)
+{
+    int N_COL = 4;
+    int width[N_COL] = {0};
+    std::string COL_HEADERS[] = {"size of matrix", "serial execution time", "openMP execution time", "pthread execution time"};
+    for (int i = 0; i < N_COL; ++i)
+    {
+        width[i] = 2 + COL_HEADERS[i].length();
+    }
+    for (int i = 0; i < (int)infos.size(); ++i)
+    {
+        width[0] = std::max(width[0], 1 + 2 * (int)std::to_string(infos[i].n).length());
+    }
+    for (int i = 0; i < (int)infos.size(); ++i)
+    {
+        width[1] = std::max(width[1], 2 + (int)std::to_string(infos[i].serial_time).length());
+    }
+    for (int i = 0; i < (int)infos.size(); ++i)
+    {
+        width[2] = std::max(width[2], 2 + (int)std::to_string(infos[i].omp_time).length());
+    }
+    for (int i = 0; i < (int)infos.size(); ++i)
+    {
+        width[3] = std::max(width[3], 2 + (int)std::to_string(infos[i].pthread_time).length());
+    }
 }

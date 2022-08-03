@@ -1,6 +1,7 @@
 #ifndef __RUN_INFO__
 #define __RUN_INFO__
 #include <iostream>
+#include <iomanip>
 
 typedef struct run_info
 {
